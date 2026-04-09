@@ -1,0 +1,49 @@
+name: Build UnlimitedSpare Plugin
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 6
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Download BepInEx IL2CPP
+        run: |
+          curl -L "https://github.com/BepInEx/BepInEx/releases/download/v6.0.0-pre.2/BepInEx_Unity_IL2CPP_linux_x64_6.0.0-pre.2.zip" -o BepInEx.zip
+          unzip -q BepInEx.zip -d BepInEx_extracted
+
+      - name: Copy BepInEx DLLs into libs/
+        run: |
+          mkdir -p libs
+          for dll in BepInEx.Core.dll BepInEx.Unity.IL2CPP.dll BepInEx.Unity.Common.dll Il2CppInterop.Runtime.dll 0Harmony.dll; do
+            found=$(find BepInEx_extracted -name "$dll" | head -1)
+            if [ -n "$found" ]; then
+              cp "$found" libs/
+              echo "Copied $dll"
+            else
+              echo "ERROR: $dll not found!" && exit 1
+            fi
+          done
+
+      - name: Build game type stubs (Assembly-CSharp.dll)
+        run: dotnet build stubs/Stubs.csproj -c Release -o libs/
+
+      - name: Build plugin
+        run: dotnet build OperatorUnlimitedSpare.csproj -c Release -o output/
+
+      - name: Upload plugin DLL as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: OperatorUnlimitedSpare
+          path: output/OperatorUnlimitedSpare.dll

@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>OperatorUnlimitedSpare</AssemblyName>
+    <RootNamespace>OperatorUnlimitedSpare</RootNamespace>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <!--
+    Copy these DLLs into a libs\ folder next to this .csproj:
+
+    From OPERATOR\BepInEx\core\:
+      BepInEx.Core.dll
+      BepInEx.Unity.IL2CPP.dll
+      BepInEx.Unity.Common.dll
+      Il2CppInterop.Runtime.dll
+      0Harmony.dll
+
+    From OPERATOR\BepInEx\interop\  (generated on first BepInEx launch):
+      Assembly-CSharp.dll
+  -->
+
+  <ItemGroup>
+    <Reference Include="BepInEx.Core">
+      <HintPath>libs\BepInEx.Core.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="BepInEx.Unity.IL2CPP">
+      <HintPath>libs\BepInEx.Unity.IL2CPP.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Il2CppInterop.Runtime">
+      <HintPath>libs\Il2CppInterop.Runtime.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>libs\0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>libs\Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+</Project>

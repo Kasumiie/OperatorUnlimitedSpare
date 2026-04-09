@@ -18,9 +18,9 @@ jobs:
         with:
           dotnet-version: '6.0.x'
 
-      - name: Download BepInEx IL2CPP
+      - name: Download BepInEx IL2CPP (build 755)
         run: |
-          curl -L "https://github.com/BepInEx/BepInEx/releases/download/v6.0.0-pre.2/BepInEx_Unity_IL2CPP_linux_x64_6.0.0-pre.2.zip" -o BepInEx.zip
+          curl -L "https://builds.bepinex.dev/projects/bepinex_be/755/BepInEx-Unity.IL2CPP-linux-x64-6.0.0-be.755%2B3fab71a.zip" -o BepInEx.zip
           unzip -q BepInEx.zip -d BepInEx_extracted
 
       - name: Copy BepInEx DLLs into libs/
